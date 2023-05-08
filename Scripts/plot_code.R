@@ -2,13 +2,14 @@
 # SET UP ---
 # Studying the effect of the gene raga-1 and how it interacts with stress on longevity and reproduction in the nematode worm (C. elegans) through gene knockout
 
+
 #__________________________----
 # 📦 PACKAGES ----
-library(ggplot2) # creates data visualisation
+library(tidyverse) # creates data visualisation
 library(readxl) # reads xlsx or xls files
-library(ggpubr)
-library(dplyr)
+library(ggpubr) # aids ggplot2
 library(performance) # provides a collection of tools for evaluating and visualizing the performance of predictive models
+
 
 #__________________________----
 # 📂 IMPORT DATA ----
@@ -49,6 +50,7 @@ df <- rbind(f0_data, f1_data)
 df$Light_Exposure <- factor(df$Light_Exposure, levels = c("light", "dark"))
 df$rnai <- factor(df$rnai, levels = c("raga", "ev"))
 df$generation <- factor(df$generation, levels = c("f1", "f0"))
+
 
 #__________________________----
 # 📊PLOTS ----
