@@ -1,4 +1,4 @@
-# :blossom:  Summative-2 BIO 5023Y
+# :blossom:  Summative 2 BIO 5023Y
 
 ## ✨ Brief introduction
 This is a solo project assignment for module BIO 5023Y - Data Science for Biologists. This assignment was completed in May 2023 during my second year of my BSc in Biological Sciences at University of East Anglia. Skills acquired during the completion of this assignment include:  data cleaning, exploratory analysis, data visualization & statistical model building and inference.
