@@ -1,4 +1,4 @@
-# :worm:  Summative-2 BIO 5023Y
+# :blossom:  Summative-2 BIO 5023Y
 
 ## ✨ Brief introduction
 This is a solo project assignment for module BIO 5023Y - Data Science for Biologists. This assignment was completed in May 2023 during my second year of my BSc in Biological Sciences at University of East Anglia. Skills acquired during the completion of this assignment include:  data cleaning, exploratory analysis, data visualization & statistical model building and inference.
@@ -11,11 +11,15 @@ This report studies the effect of the gene raga-1 and how it interacts with stre
 -  Submit this repo to the GitHub Classroom by the assignment deadline
 
 ## :round_pushpin:  Software specifications
-This project was completed using R version 4.2.3 and RSTudio Desktop
-Packages needed:
+This project was completed using R version 4.2.3 and RSTudio Desktop. Packages needed:
 -  tidyverse **→** includes a range of essential packages (such as: ggplot2, dplyr, tidyr etc.)
 -  readxl **→** reads the xlsx data file
 -  performance **→** provides a collection of tools for visualizing models
 
 ## :bar_chart:	Data
 The variables within the data used for this project represent as follows:
+-  rnai = dsRNA treatment of nematodes targeting either the raga gene or ev (empty vector control) for gene expression knockdown
+-  treatment = dark or light exposure to light or dark (light is a stress environment for the nematode)
+-  offspring = number of offspring produced
+-  parental treatment	= light or dark conditions experienced by the subjects parents
+-  parental_rnai	= rnai treatment of the subjects parents
