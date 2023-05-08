@@ -19,10 +19,3 @@ Packages needed:
 
 ## :bar_chart:	Data
 The variables within the data used for this project represent as follows:
-
-| Variable   | Definition                                                                                                 |
-|------------|------------------------------------------------------------------------------------------------------------|
-| rnai  | dsRNA treatment of nematodes targeting either the raga gene or ev (empty vector control) for gene expression knockdown |
-| treatment       | dark or light exposure to light or dark (light is a stress environment for the nematode)                                              |
-| offspring | number of offspring produced
-                     |
