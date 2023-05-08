@@ -15,8 +15,9 @@ This project was completed using R version 4.2.3 and RSTudio Desktop. Packages n
 -  tidyverse **→** includes a range of essential packages (such as: ggplot2, dplyr, tidyr etc.)
 -  readxl **→** reads the xlsx data file
 -  performance **→** provides a collection of tools for visualizing models
+-  ggpubr **→** facilitates ggplot2
 
-## :bar_chart:	Data
+## :bar_chart:	Data - elegans_offspring.xlsx
 The variables within the data used for this project represent as follows:
 -  rnai = dsRNA treatment of nematodes targeting either the raga gene or ev (empty vector control) for gene expression knockdown
 -  treatment = dark or light exposure to light or dark (light is a stress environment for the nematode)
