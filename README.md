@@ -7,7 +7,7 @@ This report studies the effect of the gene raga-1 and how it interacts with stre
 ## 🎯 Objectives
 -  Analyse one dataset contained within this repository (elegans_offspring.xlsx - used)
 -  Use Markdown to write a formal lab report: hand the output in separately through Blackboard
--  Include all required Rscripts and Rmd files needed to fully reproduce your report here
+-  Include all required scripts and Rmd files needed to fully reproduce your report here
 -  Submit this repo to the GitHub Classroom by the assignment deadline
 
 ## :round_pushpin:  Software specifications
