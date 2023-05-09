@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 Studying the effect of the gene raga-1 and how it interacts with stress on longevity and reproduction in the nematode worm Caenorhabditis elegans
 
 
@@ -24,12 +29,11 @@ library(GGally)
 library(performance) 
 library(patchwork)
 library(rstatix)
-library(kableExtra)
 ```
 
 ```{r}
-f0_data <- read_excel(path = "Data/elegans_offspring.xlsx", sheet = 1, col_names = TRUE, col_types = NULL)
-f1_data <- read_excel(path = "Data/elegans_offspring.xlsx", sheet = 2, col_names = TRUE, col_types = NULL)
+f0_data <- read_excel(path = "Home/5023Y-Summative-2/Data/elegans_offspring.xlsx", sheet = 1, col_names = TRUE, col_types = NULL)
+f1_data <- read_excel(path = "Home/5023Y-Summative-2/Data/elegans_offspring.xlsx", sheet = 2, col_names = TRUE, col_types = NULL)
 ```
 
 ```{r}
