@@ -1,0 +1,106 @@
+Studying the effect of the gene raga-1 and how it interacts with stress on longevity and reproduction in the nematode worm Caenorhabditis elegans
+
+
+Introduction : Caenorhabditis elegans, also known as C. elegans is a nematode worm commonly used in biology as a model organism for various experiments ranging from genetics to neuroscience and ageing research (Markaki & Tavernarakis, 2020). The nematode C. elegans has a simple, small anatomy (about 1 mm in length and a transparent body), a short lifespan and reproduces fast. 
+
+The life cycle of C. elegans is short, meaning that the average nematode lives around 20 days and it goes through four larval stages (L1-L4) before becoming a fully developed adult (Ambros, 2000; Byerly et al., 1976). This developmental period lasts 3-4 days at 20°C and starts off as a single body cavity during the first larval stage, following further development of distinct features such as the reproductive system and repetitive episodes of moults, shedding its outer cuticle multiple times (Hirsh et al., 1976). 
+
+The focus of this paper is the interplay between genetic and environmental factors on the reproductive abilities of C. elegans. The reproductive system of this species is hermaphroditic, meaning that it is made up of both male and female reproductive organs. Thus, self-fertilisation is very common and the germ cells in the hermaphroditic gonads undergo mitosis and meiosis to produce oocytes, which are then fertilised by sperm in the uterus. Finally, the zygotes are laid through the vulva (Han et al., 2009; Kimble & White, 1981). 
+
+Under optimal conditions, C. elegans can lay up to 300 eggs during their lifetime (Ward et al., 1981). However, this reproductive lifespan can vary greatly and is influenced by various genetic and environmental factors such as: diet, temperature, and exposure to light/dark conditions. Interestingly, the gene raga-1 is present in other organisms, including humans and its role is to encode a protein that is part of the mTORC1 signalling pathway involved in development, metabolism and longevity (Bar-Peled & Sabatini, 2014; Blackwell et al., 2019). The gene has been conserved across species and studying it at a deeper level, would allow us to learn more about potential therapies for a variety of diseases including cancer, diabetes or reproductive diseases (Condon & Sabatini, 2019).
+
+
+Hypothesis: Previous scientific literature published has linked reduced fertility in nematodes with a reduced expression of the raga-1 gene. This was found to be caused by defects in sperm and oocytes since the mTORC1 pathway cannot support meiotic progression and gamete production in such instances (Fukuyama et al., 2012). Therefore, I hypothesised that there would be a significant drop in offspring count in the groups of nematodes (both f0 and f1) offered RNAi treatment to lose the expression of raga-1 gene compared to the groups of nematodes offered RNAi treatment in empty vectors.
+Null Hypothesis: No significant difference in the count of offspring count between the two groups of nematodes. 
+
+
+Data and model : Differential Raga-1 Gene Expression and its Impact on Fertility. To test the hypothesis mentioned in the previous paragraph, I compared the offspring count of 4 different groups of C. elegans nematodes.
+
+```{r}
+library(tidyverse) 
+library(readxl) 
+library(ggpubr) 
+library(GGally)
+library(performance) 
+library(patchwork)
+library(rstatix)
+library(kableExtra)
+```
+
+```{r}
+f0_data <- read_excel(path = "Data/elegans_offspring.xlsx", sheet = 1, col_names = TRUE, col_types = NULL)
+f1_data <- read_excel(path = "Data/elegans_offspring.xlsx", sheet = 2, col_names = TRUE, col_types = NULL)
+```
+
+```{r}
+f0_data$offspring <- as.numeric(f0_data$offspring)
+f1_data$offsprings <- as.numeric(f1_data$offsprings)
+colnames(f1_data)[4] <- "offspring"
+
+f0_data <- na.omit(f0_data)
+f1_data <- na.omit(f1_data)
+
+f0_data$generation <- "f0"
+f1_data$generation <- "f1"
+
+colnames(f1_data)[1] <- "rnai"
+f1_data <- select(f1_data, -parental_treatment)
+f0_data <- select(f0_data, -replicate)
+
+df <- rbind(f0_data, f1_data)
+
+df$treatment <- factor(df$treatment, levels = c("light", "dark"))
+df$rnai <- factor(df$rnai, levels = c("raga", "ev"))
+df$generation <- factor(df$generation, levels = c("f1", "f0"))
+```
+
+```{r}
+ggplot(df, aes(x = rnai, y = offspring, fill = treatment)) +
+  geom_boxplot(color = "black") +
+  facet_wrap(~ generation, ncol = 2) +
+  scale_fill_manual(values = c("white", "gray")) +
+  labs(x = "RNAi Treatment of f0", y = "Offspring Count") +
+  theme_classic()
+```
+Figure 1. Boxplot comparing the offspring count of 2 different generations of C. elegans nematodes, treated with either an empty vector or a raga-1 RNAi genetic knockdown treatment. They have been kept under different light environments, grey represents the sub-groups of nematodes grown in the dark whilst the white represents the sub-groups exposed to light. F1 stands for first filial generation, f0 stands for parental generation. 
+
+This boxplot doesn’t necessarily show a pattern to the naked eye, but to test whether the nematodes with reduced raga expression actually have a significantly lower offspring count than the ev subjects, I ran a t-test to compare the mean offspring counts between the raga and ev treatments. Using a general linear model with raga/eve gene treatment as a factorial predictor variable against offspring count (on separate occasions for each generation). This analysis showed that raga treated f0 nematodes reproduced only slightly more often than the f0 ev nematodes. [95% Cl; 39-56.6] (P>0.05). Similarly, in the f1 generation, the raga treated nematodes produced on average, a very similar amount of offspring to the ev mutants. [95% Cl; 8-8.9] (P>0.05)
+
+Results and discussion : My chosen significance level is 0.005 and my p-values are greater than this. As a result the null hypothesis is accepted and the alternative hypothesis is rejected. In this case, the difference in the count of offspring count between the two groups of nematodes (raga and ev mutants) in both f0 and f1 generations is not statistically significant.
+
+Despite the idea that lowered raga expression in nematodes does lead to a reduced production of offspring in nematodes as seen with the naked eye in figure 1, there are multiple environmental factors that play a role and the function of this gene has not yet been fully understood to make strong assumptions. Light exposure could affect the nematodes' behaviour, leading them to mate more frequently or for longer periods of time, which could also result in increased offspring production (Mei & Singson, 2020). 
+
+Environmental factors can affect gene expression and potentially switch genes on or off, even if a genetic knockdown has been performed. While genetic knockdowns can significantly reduce the expression of a particular gene, confounding effects could have altered the distribution of our data. Further research of the relationship between light exposure, the raga gene, and nematode reproduction is needed for a clear, robust conclusion. 
+
+
+References : 
+Ambros, V. (2000) ‘Control of developmental timing in Caenorhabditis elegans’, Current Opinion in Genetics & Development, 10(4), pp. 428–433. doi:10.1016/s0959-437x(00)00108-8.
+
+Bar-Peled, L. and Sabatini, D.M. (2014) ‘Regulation of mtorc1 by amino acids’, Trends in Cell Biology, 24(7), pp. 400–406. doi:10.1016/j.tcb.2014.03.003.
+
+Blackwell, T.K. et al. (2019) ‘Tor signaling in caenorhabditis elegans development, metabolism, and aging’, Genetics, 213(2), pp. 329–360. doi:10.1534/genetics.119.302504.
+
+Byerly, L., Cassada, R.C. and Russell, R.L. (1976) ‘The life cycle of the nematode caenorhabditis elegans’, Developmental Biology, 51(1), pp. 23–33. doi:10.1016/0012-1606(76)90119-6.
+
+Condon, K.J. and Sabatini, D.M. (2019) ‘Nutrient regulation of mTORC1 at a glance’, Journal of Cell Science, 132(21). doi:10.1242/jcs.222570.
+
+Fukuyama, M. et al. (2012) ‘C. elegans AMPKS promote survival and arrest germline development during nutrient stress’, Biology Open, 1(10), pp. 929–936. doi:10.1242/bio.2012836.
+
+Han, S.M., Cottee, P.A. and Miller, M.A. (2009) ‘Sperm and oocyte communication mechanisms controlling C. elegans fertility’, Developmental Dynamics [Preprint]. doi:10.1002/dvdy.22202.
+
+Hirsh, D., Oppenheim, D. and Klass, M. (1976) ‘Development of the reproductive system of Caenorhabditis elegans’, Developmental Biology, 49(1), pp. 200–219. doi:10.1016/0012-1606(76)90267-0.
+
+Kenyon, C. (2010) ‘A pathway that links reproductive status to lifespan in Caenorhabditis elegans’, Annals of the New York Academy of Sciences, 1204(1), pp. 156–162. doi:10.1111/j.1749-6632.2010.05640.x.
+
+Kimble, J.E. and White, J.G. (1981) ‘On the control of germ cell development in Caenorhabditis elegans’, Developmental Biology, 81(2), pp. 208–219. doi:10.1016/0012-1606(81)90284-0.
+
+Markaki, M. and Tavernarakis, N. (2020) ‘Caenorhabditis elegans as a model system for human diseases’, Current Opinion in Biotechnology, 63, pp. 118–125. doi:10.1016/j.copbio.2019.12.011.
+
+Mei, X. and Singson, A.W. (2020) ‘The molecular underpinnings of fertility: Genetic approaches in caenorhabditis elegans’, Advanced Genetics, 2(1). doi:10.1002/ggn2.10034.
+
+Passtoors, W.M. et al. (2012) ‘Gene expression analysis of mtor pathway: Association with human longevity’, Aging Cell, 12(1), pp. 24–31. doi:10.1111/acel.12015.
+
+Tissenbaum, H.A. (2018) ‘DAF-16: Foxo in the context of C. elegans’, Current Topics in Developmental Biology, pp. 1–21. doi:10.1016/bs.ctdb.2017.11.007.
+
+Ward, S., Argon, Y. and Nelson, G.A. (1981) ‘Sperm morphogenesis in wild-type and fertilization-defective mutants of caenorhabditis elegans.’, Journal of Cell Biology, 91(1), pp. 26–44. doi:10.1083/jcb.91.1.26. 
+
