@@ -39,7 +39,7 @@ f0offspringls1 %>% broom::tidy(conf.int = T) %>%
                     "P",
                     "Lower 95% CI",
                     "Upper 95% CI"),
-      caption = "F0 Reproduction - Dark/Light conditions and RNAi gene treatment", 
+      caption = "f0 generation", 
       booktabs = TRUE) %>% 
   kable_styling(full_width = FALSE, font_size=16, latex_options = c("striped", "hold_position"))
 
@@ -91,7 +91,7 @@ f1offspringls1 %>% broom::tidy(conf.int = T) %>%
                     "P",
                     "Lower 95% CI",
                     "Upper 95% CI"),
-      caption = "F0 Reproduction - Dark/Light conditions and RNAi gene treatment", 
+      caption = "f1 Generation", 
       booktabs = TRUE) %>% 
   kable_styling(full_width = FALSE, font_size=16, latex_options = c("striped", "hold_position"))
 
