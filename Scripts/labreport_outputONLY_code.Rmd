@@ -1,0 +1,146 @@
+---
+title: "lab_report_outputs"
+author: "Denisa Batrinu"
+date: "2023-05-06"
+output: html_document
+---
+
+Loading packages.
+```{r}
+library(tidyverse) 
+library(readxl) 
+library(ggpubr) 
+library(performance) 
+```
+
+Importing data.
+```{r}
+f0_data <- read_excel("Data/elegans_offspring.xlsx", sheet = 1
+                      , col_names = TRUE, col_types = NULL, na = "", skip = 0)
+f1_data <- read_excel("Data/elegans_offspring.xlsx", sheet = 2
+                      , col_names = TRUE, col_types = NULL, na = "", skip = 0)
+```
+
+Tidy the data.
+```{r}
+f0_data$offspring <- as.numeric(f0_data$offspring)
+f1_data$offsprings <- as.numeric(f1_data$offsprings)
+```
+
+```{r}
+f0_data <- select(f0_data, -replicate)
+f1_data <- select(f1_data, -parental_treatment)
+```
+
+```{r}
+colnames(f1_data)[3] <- "offspring"
+colnames(f1_data)[1] <- "rnai"
+colnames(f1_data)[2] <- "Light_Exposure"
+colnames(f0_data)[2] <- "Light_Exposure"
+```
+
+```{r}
+f0_data <- na.omit(f0_data)
+f1_data <- na.omit(f1_data)
+```
+
+```{r}
+f0_data$generation <- "f0"
+f1_data$generation <- "f1"
+```
+
+```{r}
+df <- rbind(f0_data, f1_data)
+```
+
+```{r}
+df$Light_Exposure <- factor(df$Light_Exposure, levels = c("light", "dark"))
+df$rnai <- factor(df$rnai, levels = c("raga", "ev"))
+df$generation <- factor(df$generation, levels = c("f1", "f0"))
+```
+
+Visualisation of the data
+```{r}
+ggplot(df, aes(x = rnai, y = offspring, fill = Light_Exposure)) +
+  geom_boxplot(color = "black") +
+  facet_wrap(~ generation, ncol = 2) +
+  scale_fill_manual(values = c("white", "gray")) +
+  labs(x = "RNAi Treatment of f0", y = "Offspring Count") +
+  theme_classic()
+```
+
+T-test analysis.
+```{r}
+f0_means <- f0_data %>%
+  group_by(rnai, Light_Exposure) %>%
+  summarize(mean_offspring = mean(offspring))
+```
+
+```{r}
+f1_means <- f1_data %>%
+  group_by(rnai, Light_Exposure) %>%
+  summarize(mean_offspring = mean(offspring))
+```
+
+```{r}
+f0_ttest <- t.test(offspring ~ rnai, data = f0_data)
+f1_ttest <- t.test(offspring ~ rnai, data = f1_data)
+```
+
+```{r}
+cat("F0 t-test p-value:", f0_ttest$p.value, "\n")
+cat("F1 t-test p-value:", f1_ttest$p.value, "\n")
+```
+
+```{r}
+view(f1_ttest)
+view(f0_ttest)
+```
+
+Visualisation of statistical models.
+```{r}
+library("see")
+library("patchwork")
+```
+
+```{r}
+model1<- lm(offspring ~ rnai + Light_Exposure, data = f1_data)
+summary(model1)
+```
+
+```{r}
+model0<- lm(offspring ~ rnai + Light_Exposure, data = f0_data)
+summary(model0)
+```
+
+```{r}
+performance::check_model(model1, check ="qq")
+```
+
+```{r}
+performance::check_model(model1, check ="outliers")
+```
+
+```{r}
+performance::check_model(model1, check ="homogeneity")
+```
+
+```{r}
+performance::check_model(model1, check ="vif")
+```
+
+```{r}
+performance::check_model(model0, check ="qq")
+```
+
+```{r}
+performance::check_model(model0, check ="outliers")
+```
+
+```{r}
+performance::check_model(model0, check ="homogeneity")
+```
+
+```{r}
+performance::check_model(model10, check ="vif")
+```
