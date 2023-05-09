@@ -15,9 +15,9 @@ library(performance)
 
 Importing data.
 ```{r}
-f0_data <- read_excel("Data/elegans_offspring.xlsx", sheet = 1
+f0_data <- read_excel("5023Y-Summative-2/Data/elegans_offspring.xlsx", sheet = 1
                       , col_names = TRUE, col_types = NULL, na = "", skip = 0)
-f1_data <- read_excel("Data/elegans_offspring.xlsx", sheet = 2
+f1_data <- read_excel("5023Y-Summative-2/Data/elegans_offspring.xlsx", sheet = 2
                       , col_names = TRUE, col_types = NULL, na = "", skip = 0)
 ```
 
